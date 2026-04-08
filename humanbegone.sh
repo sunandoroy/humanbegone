@@ -70,9 +70,11 @@ if [[ -n "$BT2_INDEX" && "$BT2_INDEX" != /* ]]; then BT2_INDEX="$ORIGINAL_DIR/$B
 if [[ -n "$OUTPUT_DIR" && "$OUTPUT_DIR" != /* ]]; then OUTPUT_DIR="$ORIGINAL_DIR/$OUTPUT_DIR"; fi
 
 if [ -d "$INPUT" ]; then
+    BASE_INPUT_DIR="$INPUT"
     WORK_DIR="${INPUT}/work"
 else
-    WORK_DIR="$(dirname "$INPUT")/work"
+    BASE_INPUT_DIR="$(dirname "$INPUT")"
+    WORK_DIR="${BASE_INPUT_DIR}/work"
 fi
 mkdir -p "$WORK_DIR"
 cd "$WORK_DIR" || exit 1
@@ -105,12 +107,12 @@ process_sample() {
 	local R2=$3
 	local IS_PE=$4
 
-    # Resolve relative paths to the invoking directory ($ORIGINAL_DIR)
+    # Resolve relative paths relative to the Input file's directory ($BASE_INPUT_DIR)
     if [[ ! -z "$R1" && "$R1" != /* ]]; then
-        R1="$ORIGINAL_DIR/$R1"
+        R1="${BASE_INPUT_DIR}/$R1"
     fi
     if [[ "$IS_PE" = true && ! -z "$R2" && "$R2" != /* ]]; then
-        R2="$ORIGINAL_DIR/$R2"
+        R2="${BASE_INPUT_DIR}/$R2"
     fi
 
     echo "-------------------------------------------"
