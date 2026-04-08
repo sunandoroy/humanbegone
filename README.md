@@ -1,6 +1,6 @@
 # HumanBeGone 🧬
 
-**HumanBeGone** is an automated, bioinformatics pipeline designed for highly efficient human sequence decontamination of FASTQ reads. It routes data through advanced pre-processing algorithms (FastP) and maps against large-scale human reference grids (Kraken2 & Bowtie2) to filter out human contamination. The indexes are based on the T2T human genome assembly GCF_009914755.1.
+**HumanBeGone** is an automated, bioinformatics pipeline designed for highly efficient human sequence decontamination of FASTQ reads. It routes data through advanced pre-processing algorithms (FastP) and maps against large-scale human reference grids (Kraken2 & Bowtie2) to filter out human contamination. The indexes are based on the T2T human genome assembly GCF_009914755.1. This pipeline is optimized for speed without sacrificing accuracy of other mapping based approaches.
 
 ## 🚀 Features
 - Rapid QC and Adapter Trimming via **FastP**.
