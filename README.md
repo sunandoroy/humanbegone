@@ -1,25 +1,24 @@
 # HumanBeGone 🧬
 
-**HumanBeGone** is an automated, robust bioinformatics pipeline designed for highly efficient human sequence decontamination of FASTQ reads. It securely routes data through advanced pre-processing algorithms (FastP) and maps against large-scale human reference grids (Kraken2 & Bowtie2) to filter out human contamination.
+**HumanBeGone** is an automated, bioinformatics pipeline designed for highly efficient human sequence decontamination of FASTQ reads. It routes data through advanced pre-processing algorithms (FastP) and maps against large-scale human reference grids (Kraken2 & Bowtie2) to filter out human contamination. The indexes are based on the T2T human genome assembly GCF_009914755.1.
 
 ## 🚀 Features
 - Rapid QC and Adapter Trimming via **FastP**.
 - Two-Tiered Human filtration utilizing the swiftness of **Kraken2** combined with the high-sensitivity of **Bowtie2** structural elimination.
-- Intuitive structural logic wrapping all output analytics sequentially into highly organized, isolated Sample directories.
-- Dynamic Reporting module that auto-generates a compiled CSV tracking matrix and an interactive **HTML dataset visualization (Chart.js)** to easily parse exact read eliminations cross-pipeline.
+- Reporting that auto-generates a compiled CSV tracking matrix and an interactive **HTML dataset visualization** to easily parse exact read eliminations cross-pipeline.
 
 ---
 
 ## 🛠️ Installation & Initialization 
 
-HumanBeGone requires its core dependencies to be initialized prior to execution. A managed `init.sh` script is provided to automate this environment!
+HumanBeGone requires its core dependencies to be initialized prior to execution. A managed `init.sh` script is provided to automate this environment! This will download the T2T human genome assembly indexes for Kraken2 and Bowtie2 and initialize a conda environment. This needs to be run only once per installation. The init script also downloads a Test dataset with an example SampleSheet to run.
 
 1. Clone this repository to your computational environment:
    ```bash
    git clone https://github.com/sunandoroy/humanbegone.git
    cd humanbegone
    ```
-2. Run the initialization script. This utilizes the integrated `humanbegone.yml` to spin up a managed Anaconda environment, and simultaneously pulls down the required massive algorithmic indexing targets securely from Zenodo:
+2. Run the initialization script. This utilizes the integrated `humanbegone.yml` to spin up a managed conda environment, and simultaneously pulls down the required indexing targets securely from Zenodo:
    ```bash
    ./init.sh
    ```
@@ -41,7 +40,7 @@ HumanBeGone can natively digest direct physical directories or cleanly mapped CS
 
 ### 1. The Input Engine
 The tool accepts reads via two unique ingestion formats:
-* **Directory Pathing:** Pass the literal directory path (`/path/to/fastqs/`). The script will scan the folder organically for all standard `_R1` structured fastq files, pair them natively if `_R2` reads exist, and evaluate them automatically.
+* **Directory Pathing:** Pass the literal directory path (`/path/to/fastqs/`). The script will scan the folder organically for all standard `_R1` structured fastq files, pair them natively if `_R2` reads exist, and evaluate them automatically. **Note:** This currently only supports default Illumina naming conventions. The SampleSheet method is recommended for custom naming conventions.
 * **SampleSheet Matrix:** Alternatively, pass a targeted `.csv` tracking file.
 
 #### SampleSheet Formatting Requirement
@@ -56,23 +55,22 @@ Sample02,sample02_R1.fastq.gz,
 ### 2. Available Options Matrix
 
 Mandatory Flags:
-* `--single` or `--dual` : Dictates the baseline processing logic if sequences are Single-End or Paired-End arrays.
+* `--single` or `--dual` : Dictates the baseline processing logic if sequences are Single-End or Paired-End. Paired-end reads can also be run as `--single` which provides marginal improvement in accuracy but increases processing time.
 * `--kraken-db <path>` : Targeted path specifying the Kraken2 database directory downloaded during `init.sh` execution.
 * `--bowtie-index <path>` : The explicit string Prefix mapping the Bowtie2 indexing core downloaded during `init.sh`.
 
 Optional Modifiers:
-* `--skip-fastp` : Will physically bypass the entire FastP module. The script natively forwards original raw arrays precisely into Kraken2 logic. Graphical reporting analytics treat the FastP subset mapping perfectly as `0%`.
+* `--skip-fastp` : Will bypass the entire FastP module. The script natively forwards original raw arrays precisely into Kraken2 logic. Graphical reporting analytics treat the FastP removal as `0%`.
 * `--threads <int>` : Computable parallel multithreading allowance limits. *(Default: 8)*.
 * `--output-dir <path>` : Explicit custom endpoint destination. The pipeline spins up temporary processing environments directly mapping relative to operations to generate logs and metadata metrics organically before finally relocating the successfully compiled structural directories cleanly out to this Custom Output Director. *(Default: Input File Directory)*.
 
-### 🌟 Full Example Execution
+### 🌟 Full Example Execution for Test data downloaded
 ```bash
-./humanbegone.sh mysamples.csv --dual \
+./humanbegone.sh Test/SampleSheet.csv --dual \
     --threads 16 \
     --kraken-db ./kraken_T2T_db/ \
     --bowtie-index ./bowtie2_T2T_db/T2T_Bowtie2_Index \
-    --skip-fastp \
-    --output-dir /storage/cleaned_data/
+    --output-dir ./Results/
 ```
 
 ---
