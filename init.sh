@@ -28,9 +28,9 @@ fi
 
 # Placeholder Zenodo URLs
 # Update these links with your actual Zenodo URLs once published.
-URL_BOWTIE="https://zenodo.org/records/19591606/files/bowtie_index.tar.gz"
-URL_KRAKEN="https://zenodo.org/records/19591606/files/kraken_index.tar.gz"
-URL_TEST_FILES="https://zenodo.org/records/19591606/files/Test.tar.gz"
+URL_BOWTIE="https://zenodo.org/records/19606373/files/bowtie_index.tar.gz"
+URL_KRAKEN="https://zenodo.org/records/19606373/files/kraken_index.tar.gz"
+URL_TEST_FILES="https://zenodo.org/records/19606373/files/Test.tar.gz"
 
 # 2. Download and Extract Bowtie2 Index
 echo -e "\n[2/4] Downloading Bowtie2 Index..."
